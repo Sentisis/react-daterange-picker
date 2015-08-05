@@ -171,6 +171,11 @@ const CalendarDate = React.createClass({
       selectionModifier = 'segment';
     }
 
+    let dateLabelModifiers = {}
+    if (selectionModifier !== undefined) {
+      dateLabelModifiers[selectionModifier] = true;
+    }
+
     if (isHighlightedDate) {
       highlightModifier = 'single';
     }
@@ -200,10 +205,6 @@ const CalendarDate = React.createClass({
       if (pmColor) {
         cellStyle.borderRightColor = lightenDarkenColor(pmColor, -10);
       }
-    }
-    let dateLabelModifiers = {}
-    if (selectionModifier != undefined) {
-      dateLabelModifiers[selectionModifier] = true;
     }
 
     return (
