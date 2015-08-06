@@ -65,7 +65,7 @@ var CalendarMonth = _reactAddons2['default'].createClass({
 
   getLocaleData: function getLocaleData() {
     var locale = require('moment/locale/es');
-    var moment_locale = (0, _momentRange2['default'])().locale(lang, locale).localeData();
+    var moment_locale = (0, _momentRange2['default'])().locale("es", locale).localeData();
     return moment_locale;
   },
 

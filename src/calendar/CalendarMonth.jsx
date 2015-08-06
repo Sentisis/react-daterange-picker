@@ -29,7 +29,7 @@ const CalendarMonth = React.createClass({
 
   getLocaleData() {
     let locale = require(`moment/locale/es`);
-    let moment_locale = moment().locale(lang, locale).localeData();
+    let moment_locale = moment().locale("es", locale).localeData();
     return moment_locale
   },
 
