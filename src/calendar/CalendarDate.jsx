@@ -171,6 +171,11 @@ const CalendarDate = React.createClass({
       selectionModifier = 'segment';
     }
 
+    let dateLabelModifiers = {}
+    if (selectionModifier !== undefined) {
+      dateLabelModifiers[selectionModifier] = true;
+    }
+
     if (isHighlightedDate) {
       highlightModifier = 'single';
     }
@@ -216,7 +221,7 @@ const CalendarDate = React.createClass({
           </div>}
         {numStates === 1 &&
           <div className={this.cx({element: "FullDateStates"})} style={style} />}
-        <span className={this.cx({element: "DateLabel"})}>{date.format('D')}</span>
+        <span className={this.cx({element: "DateLabel", modifiers: dateLabelModifiers })}>{date.format('D')}</span>
         {selectionModifier ? <CalendarSelection modifier={selectionModifier} pending={pending} /> : null}
         {highlightModifier ? <CalendarHighlight modifier={highlightModifier} /> : null}
       </td>
