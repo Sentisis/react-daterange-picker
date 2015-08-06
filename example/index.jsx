@@ -31,6 +31,8 @@ const DatePickerRange = React.createClass({
   },
 
   handleSelect(value, states) {
+    console.log(value);
+    console.log(states);
     this.setState({value, states});
   },
 
@@ -185,10 +187,18 @@ const Index = React.createClass({
 
             <div className="example">
               <h4>Range with custom weekdays</h4>
-              <DatePickerSingle
+              <DatePickerRange
                 numberOfCalendars={2}
                 selectionType="range"
                 weekdayNames={["M", "T", "W", "T", "F", "S", "S"]}
+                minimumDate={new Date()} />
+            </div>
+            <div className="example">
+              <h4>En español, baby</h4>
+              <DatePickerSingle
+                numberOfCalendars={2}
+                lang="es"
+                selectionType="single"
                 minimumDate={new Date()} />
             </div>
           </div>
