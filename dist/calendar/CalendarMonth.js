@@ -42,11 +42,6 @@ var _utilsPureRenderMixin = require('../utils/PureRenderMixin');
 
 var _utilsPureRenderMixin2 = _interopRequireDefault(_utilsPureRenderMixin);
 
-var lang = (0, _momentRange2['default'])().localeData();
-
-var WEEKDAYS = _immutable2['default'].List(lang._weekdays).zip(_immutable2['default'].List(lang._weekdaysShort));
-var MONTHS = _immutable2['default'].List(lang._months);
-
 var CalendarMonth = _reactAddons2['default'].createClass({
   displayName: 'CalendarMonth',
 
@@ -61,9 +56,25 @@ var CalendarMonth = _reactAddons2['default'].createClass({
     hideSelection: _reactAddons2['default'].PropTypes.bool,
     highlightedDate: _reactAddons2['default'].PropTypes.object,
     highlightedRange: _reactAddons2['default'].PropTypes.object,
+    lang: _reactAddons2['default'].PropTypes.string,
     onMonthChange: _reactAddons2['default'].PropTypes.func,
     onYearChange: _reactAddons2['default'].PropTypes.func,
-    value: _utilsCustomPropTypes2['default'].momentOrMomentRange },
+    value: _utilsCustomPropTypes2['default'].momentOrMomentRange,
+    weekdayNames: _utilsCustomPropTypes2['default'].weekArray
+  },
+
+  getLocaleData: function getLocaleData(lang) {
+    var moment_locale = (0, _momentRange2['default'])().localeData();
+    if (lang !== undefined && lang !== 'en') {
+      try {
+        var locale = require('moment/locale/' + lang);
+        moment_locale = (0, _momentRange2['default'])().locale(lang, locale).localeData();
+      } catch (err) {}
+    } else if (lang === 'en') {
+      moment_locale = (0, _momentRange2['default'])().locale('en').localeData();
+    }
+    return moment_locale;
+  },
 
   renderDay: function renderDay(date, i) {
     var _props = this.props;
@@ -118,12 +129,19 @@ var CalendarMonth = _reactAddons2['default'].createClass({
   },
 
   renderDayHeaders: function renderDayHeaders() {
-    var firstOfWeek = this.props.firstOfWeek;
+    var _props2 = this.props;
+    var lang = _props2.lang;
+    var firstOfWeek = _props2.firstOfWeek;
+    var weekdayNames = _props2.weekdayNames;
 
     var indices = _immutable2['default'].Range(firstOfWeek, 7).concat(_immutable2['default'].Range(0, firstOfWeek));
-
     var headers = indices.map((function (index) {
-      var weekday = WEEKDAYS.get(index);
+      var moment_locale = this.getLocaleData(lang);
+      var weekdays = _immutable2['default'].List(moment_locale._weekdays).zip(moment_locale._weekdaysShort);
+      if (weekdayNames != undefined) {
+        weekdays = _immutable2['default'].List(moment_locale._weekdays).zip(_immutable2['default'].List(weekdayNames));
+      }
+      var weekday = weekdays.get(index);
       return _reactAddons2['default'].createElement(
         'th',
         { className: this.cx({ element: 'WeekdayHeading' }), key: weekday, scope: 'col' },
@@ -189,9 +207,9 @@ var CalendarMonth = _reactAddons2['default'].createClass({
   },
 
   renderMonthChoice: function renderMonthChoice(month, i) {
-    var _props2 = this.props;
-    var firstOfMonth = _props2.firstOfMonth;
-    var enabledRange = _props2.enabledRange;
+    var _props3 = this.props;
+    var firstOfMonth = _props3.firstOfMonth;
+    var enabledRange = _props3.enabledRange;
 
     var disabled = false;
     var year = firstOfMonth.year();
@@ -212,19 +230,21 @@ var CalendarMonth = _reactAddons2['default'].createClass({
   },
 
   renderHeaderMonth: function renderHeaderMonth() {
-    var firstOfMonth = this.props.firstOfMonth;
+    var _props4 = this.props;
+    var lang = _props4.lang;
+    var firstOfMonth = _props4.firstOfMonth;
 
-    var choices = MONTHS.map(this.renderMonthChoice);
+    var moment_locale = this.getLocaleData(lang);
+    var choices = moment_locale._months.map(this.renderMonthChoice);
     var modifiers = { month: true };
-
     return _reactAddons2['default'].createElement(
       'span',
       { className: this.cx({ element: 'MonthHeaderLabel', modifiers: modifiers }) },
-      firstOfMonth.format('MMMM'),
+      moment_locale._months[firstOfMonth.month()],
       this.props.disableNavigation ? null : _reactAddons2['default'].createElement(
         'select',
         { className: this.cx({ element: 'MonthHeaderSelect' }), value: firstOfMonth.month(), onChange: this.handleMonthChange },
-        choices.toJS()
+        choices
       )
     );
   },
@@ -240,9 +260,9 @@ var CalendarMonth = _reactAddons2['default'].createClass({
   },
 
   render: function render() {
-    var _props3 = this.props;
-    var firstOfWeek = _props3.firstOfWeek;
-    var firstOfMonth = _props3.firstOfMonth;
+    var _props5 = this.props;
+    var firstOfWeek = _props5.firstOfWeek;
+    var firstOfMonth = _props5.firstOfMonth;
 
     var cal = new _calendar2['default'].Calendar(firstOfWeek);
     var monthDates = _immutable2['default'].fromJS(cal.monthDates(firstOfMonth.year(), firstOfMonth.month()));
@@ -267,7 +287,8 @@ var CalendarMonth = _reactAddons2['default'].createClass({
         )
       )
     );
-  } });
+  }
+});
 
 exports['default'] = CalendarMonth;
 module.exports = exports['default'];

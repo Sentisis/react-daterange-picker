@@ -48,5 +48,16 @@ exports['default'] = {
       return null;
     }
     return new Error('\'' + propName + '\' must be a moment range');
-  } };
+  },
+
+  weekArray: function weekArray(props, propName) {
+    var val = props[propName];
+    if (!val) {
+      return null;
+    } else if (val.constructor === Array && val.length == 7) {
+      return null;
+    }
+    return new Error(propName + '\' must be an array of 7 elements');
+  }
+};
 module.exports = exports['default'];
