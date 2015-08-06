@@ -27,18 +27,9 @@ const CalendarMonth = React.createClass({
     weekdayNames: CustomPropTypes.weekArray,
   },
 
-  getLocaleData(lang) {
-    let moment_locale = moment().localeData();
-    if (lang !== undefined && lang !== 'en') {
-      try {
-        let locale = require(`moment/locale/${lang}`);
-        moment_locale = moment().locale(lang, locale).localeData();
-      }
-      catch(err) {}
-    }
-    else if (lang === 'en') {
-      moment_locale = moment().locale('en').localeData();
-    }
+  getLocaleData() {
+    let locale = require(`moment/locale/es`);
+    let moment_locale = moment().locale(lang, locale).localeData();
     return moment_locale
   },
 

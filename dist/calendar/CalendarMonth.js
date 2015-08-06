@@ -63,16 +63,9 @@ var CalendarMonth = _reactAddons2['default'].createClass({
     weekdayNames: _utilsCustomPropTypes2['default'].weekArray
   },
 
-  getLocaleData: function getLocaleData(lang) {
-    var moment_locale = (0, _momentRange2['default'])().localeData();
-    if (lang !== undefined && lang !== 'en') {
-      try {
-        var locale = require('moment/locale/' + lang);
-        moment_locale = (0, _momentRange2['default'])().locale(lang, locale).localeData();
-      } catch (err) {}
-    } else if (lang === 'en') {
-      moment_locale = (0, _momentRange2['default'])().locale('en').localeData();
-    }
+  getLocaleData: function getLocaleData() {
+    var locale = require('moment/locale/es');
+    var moment_locale = (0, _momentRange2['default'])().locale(lang, locale).localeData();
     return moment_locale;
   },
 
