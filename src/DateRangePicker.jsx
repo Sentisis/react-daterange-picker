@@ -430,7 +430,7 @@ const DateRangePicker = React.createClass({
       numberOfCalendars,
       selectionType,
       value,
-      weekdayNames
+      weekdayNames,
     } = this.props;
 
     let {

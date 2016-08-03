@@ -9,6 +9,11 @@ import CustomPropTypes from '../utils/CustomPropTypes';
 import isMomentRange from '../utils/isMomentRange';
 import PureRenderMixin from '../utils/PureRenderMixin';
 
+const lang = moment().localeData();
+
+const DEFAULT_WEEKDAYS = Immutable.List(lang._weekdaysShort);
+const MONTHS = Immutable.List(lang._months);
+
 const CalendarMonth = React.createClass({
   mixins: [BemMixin, PureRenderMixin],
 
@@ -32,6 +37,12 @@ const CalendarMonth = React.createClass({
     let locale = require(`moment/locale/es`);
     let moment_locale = moment().locale("es", locale).localeData();
     return moment_locale
+  },
+
+  getDefaultProps: function() {
+    return {
+      weekdayNames: DEFAULT_WEEKDAYS,
+    };
   },
 
   renderDay(date, i) {
@@ -81,11 +92,7 @@ const CalendarMonth = React.createClass({
     let {lang, firstOfWeek, weekdayNames} = this.props;
     let indices = Immutable.Range(firstOfWeek, 7).concat(Immutable.Range(0, firstOfWeek));
     let headers = indices.map(function(index) {
-      let moment_locale = this.getLocaleData(lang);
-      let weekdays = Immutable.List(moment_locale._weekdays).zip(moment_locale._weekdaysShort);
-      if (weekdayNames != undefined) {
-        weekdays = Immutable.List(moment_locale._weekdays).zip(Immutable.List(weekdayNames));
-      }
+      let weekdays = Immutable.List(lang._weekdays).zip(Immutable.List(weekdayNames));
       let weekday = weekdays.get(index);
       return (
         <th className={this.cx({element: 'WeekdayHeading'})} key={weekday} scope='col'><abbr title={weekday[0]}>{weekday[1]}</abbr></th>
