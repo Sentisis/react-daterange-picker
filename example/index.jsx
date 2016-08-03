@@ -1,5 +1,8 @@
-import React from 'react/addons';
-import moment from 'moment-range';
+/* eslint-disable react/no-multi-comp */
+
+import React from 'react';
+import moment from 'moment';
+import {} from 'moment-range';
 var fs = require('fs');
 import timekeeper from 'timekeeper';
 import RangePicker from '../src';
@@ -23,6 +26,10 @@ function processCodeSnippet(src) {
 
 
 const DatePickerRange = React.createClass({
+  propTypes: {
+    value: React.PropTypes.object,
+  },
+
   getInitialState() {
     return {
       value: this.props.value,
@@ -42,11 +49,11 @@ const DatePickerRange = React.createClass({
         <RangePicker {...this.props} onSelect={this.handleSelect} value={this.state.value} />
         <div>
           <input type="text"
-            value={this.state.value ? this.state.value.start.format('LL') : null}
+            value={this.state.value ? this.state.value.start.format('LL') : ""}
             readOnly={true}
             placeholder="Start date"/>
           <input type="text"
-            value={this.state.value ? this.state.value.end.format('LL') : null}
+            value={this.state.value ? this.state.value.end.format('LL') : ""}
             readOnly={true}
             placeholder="End date" />
         </div>
@@ -59,7 +66,7 @@ const DatePickerRange = React.createClass({
 const DatePickerSingle = React.createClass({
   getInitialState() {
     return {
-      value: null,
+      value: "",
     };
   },
 
@@ -76,7 +83,7 @@ const DatePickerSingle = React.createClass({
           value={this.state.value} />
         <div>
           <input type="text"
-            value={this.state.value ? this.state.value.format('LL') : null}
+            value={this.state.value ? this.state.value.format('LL') : ""}
             readOnly={true} />
         </div>
       </div>
