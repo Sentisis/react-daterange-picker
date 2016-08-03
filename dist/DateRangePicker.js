@@ -74,6 +74,7 @@ var DateRangePicker = _react2['default'].createClass({
     disableNavigation: _react2['default'].PropTypes.bool,
     firstOfWeek: _react2['default'].PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6]),
     helpMessage: _react2['default'].PropTypes.string,
+    lang: _react2['default'].PropTypes.string,
     initialDate: _react2['default'].PropTypes.instanceOf(Date),
     initialFromValue: _react2['default'].PropTypes.bool,
     initialMonth: _react2['default'].PropTypes.number, // Overrides values derived from initialDate/initialRange
@@ -92,7 +93,8 @@ var DateRangePicker = _react2['default'].createClass({
     singleDateRange: _react2['default'].PropTypes.bool,
     showLegend: _react2['default'].PropTypes.bool,
     stateDefinitions: _react2['default'].PropTypes.object,
-    value: _utilsCustomPropTypes2['default'].momentOrMomentRange
+    value: _utilsCustomPropTypes2['default'].momentOrMomentRange,
+    weekdayNames: _utilsCustomPropTypes2['default'].weekArray
   },
 
   getDefaultProps: function getDefaultProps() {
@@ -100,6 +102,7 @@ var DateRangePicker = _react2['default'].createClass({
     var initialDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
     return {
+      lang: 'en',
       bemNamespace: null,
       bemBlock: 'DateRangePicker',
       numberOfCalendars: 1,
@@ -488,9 +491,11 @@ var DateRangePicker = _react2['default'].createClass({
     var bemBlock = _props2.bemBlock;
     var bemNamespace = _props2.bemNamespace;
     var firstOfWeek = _props2.firstOfWeek;
+    var lang = _props2.lang;
     var numberOfCalendars = _props2.numberOfCalendars;
     var selectionType = _props2.selectionType;
     var value = _props2.value;
+    var weekdayNames = _props2.weekdayNames;
     var _state2 = this.state;
     var dateStates = _state2.dateStates;
     var enabledRange = _state2.enabledRange;
@@ -541,8 +546,10 @@ var DateRangePicker = _react2['default'].createClass({
       highlightedRange: highlightedRange,
       index: index,
       key: key,
+      lang: lang,
       selectionType: selectionType,
       value: value,
+      weekdayNames: weekdayNames,
       maxIndex: numberOfCalendars - 1,
       firstOfMonth: monthDate,
       onMonthChange: this.changeMonth,

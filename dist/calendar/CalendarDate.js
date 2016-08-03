@@ -203,6 +203,11 @@ var CalendarDate = _react2['default'].createClass({
       selectionModifier = 'segment';
     }
 
+    var dateLabelModifiers = {};
+    if (selectionModifier !== undefined) {
+      dateLabelModifiers[selectionModifier] = true;
+    }
+
     if (isHighlightedDate) {
       highlightModifier = 'single';
     }
@@ -251,7 +256,7 @@ var CalendarDate = _react2['default'].createClass({
       numStates === 1 && _react2['default'].createElement('div', { className: this.cx({ element: "FullDateStates" }), style: style }),
       _react2['default'].createElement(
         'span',
-        { className: this.cx({ element: "DateLabel" }) },
+        { className: this.cx({ element: "DateLabel", modifiers: dateLabelModifiers }) },
         date.format('D')
       ),
       selectionModifier ? _react2['default'].createElement(_CalendarSelection2['default'], { modifier: selectionModifier, pending: pending }) : null,

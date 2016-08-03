@@ -38,6 +38,8 @@ const DatePickerRange = React.createClass({
   },
 
   handleSelect(value, states) {
+    console.log(value);
+    console.log(states);
     this.setState({value, states});
   },
 
@@ -47,11 +49,11 @@ const DatePickerRange = React.createClass({
         <RangePicker {...this.props} onSelect={this.handleSelect} value={this.state.value} />
         <div>
           <input type="text"
-            value={this.state.value ? this.state.value.start.format('LL') : null}
+            value={this.state.value ? this.state.value.start.format('LL') : ""}
             readOnly={true}
             placeholder="Start date"/>
           <input type="text"
-            value={this.state.value ? this.state.value.end.format('LL') : null}
+            value={this.state.value ? this.state.value.end.format('LL') : ""}
             readOnly={true}
             placeholder="End date" />
         </div>
@@ -64,7 +66,7 @@ const DatePickerRange = React.createClass({
 const DatePickerSingle = React.createClass({
   getInitialState() {
     return {
-      value: null,
+      value: "",
     };
   },
 
@@ -81,7 +83,7 @@ const DatePickerSingle = React.createClass({
           value={this.state.value} />
         <div>
           <input type="text"
-            value={this.state.value ? this.state.value.format('LL') : null}
+            value={this.state.value ? this.state.value.format('LL') : ""}
             readOnly={true} />
         </div>
       </div>
@@ -191,6 +193,20 @@ const Index = React.createClass({
             </div>
 
             <div className="example">
+              <h4>Range with custom weekdays</h4>
+              <DatePickerRange
+                numberOfCalendars={2}
+                selectionType="range"
+                weekdayNames={["M", "T", "W", "T", "F", "S", "S"]}
+                minimumDate={new Date()} />
+            </div>
+            <div className="example">
+              <h4>En español, baby</h4>
+              <DatePickerSingle
+                numberOfCalendars={2}
+                lang="es"
+                selectionType="single"
+                minimumDate={new Date()} />
               <h4>Cusom weekdays</h4>
               <DatePickerSingle
                 numberOfCalendars={2}

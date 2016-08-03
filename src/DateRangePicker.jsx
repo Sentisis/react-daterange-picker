@@ -34,6 +34,7 @@ const DateRangePicker = React.createClass({
     disableNavigation: React.PropTypes.bool,
     firstOfWeek: React.PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6]),
     helpMessage: React.PropTypes.string,
+    lang: React.PropTypes.string,
     initialDate: React.PropTypes.instanceOf(Date),
     initialFromValue: React.PropTypes.bool,
     initialMonth: React.PropTypes.number, // Overrides values derived from initialDate/initialRange
@@ -61,6 +62,7 @@ const DateRangePicker = React.createClass({
     let initialDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
     return {
+      lang: 'en',
       bemNamespace: null,
       bemBlock: 'DateRangePicker',
       numberOfCalendars: 1,
@@ -424,6 +426,7 @@ const DateRangePicker = React.createClass({
       bemBlock,
       bemNamespace,
       firstOfWeek,
+      lang,
       numberOfCalendars,
       selectionType,
       value,
@@ -481,6 +484,7 @@ const DateRangePicker = React.createClass({
       highlightedRange,
       index,
       key,
+      lang,
       selectionType,
       value,
       weekdayNames,
